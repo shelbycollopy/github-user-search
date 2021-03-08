@@ -28,7 +28,7 @@ yarn test
 ```
 
 ## Enhancement Ideas
-- Styled Components - clean up component usage and get rid of the css module styles that come with Next starter. Ideal for a larger more robust app. 
+- Styled Components - clean up component usage and get rid of the css module styles that come with Next starter. Ideal for a larger more robust app.  Similar to how I started stucturing things here: https://github.com/shelbycollopy/shelbycollopy.com/tree/main/components
 - Enhance the UI with a theme or some color.
 - Add more details or outbound links to the results - depends on the use case of the app.
 - Type-a-head style search - would need to see if API supports it.
