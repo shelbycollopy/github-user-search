@@ -19,16 +19,15 @@ export default function App() {
 
     // Fetch user repos by most recently updated and get 100 of them
     const response = await fetch(
-      `https://api.github.com/users/${username}/repos?q=sort=updated&per_page=100`
+      `https://api.github.com/users/${username}/repos?q=sort=updated&per_page=100&type=owner`
     )
       .then((res) => res.json())
       .then((data) => {
         setFetching(false);
-        console.log(data);
         return data;
       });
 
-    // If the response has a length then we know their are repos
+    // If the response has a length then we know there are repos
     if (response && response.length > 0) {
       return setUserRepos(response);
     }
