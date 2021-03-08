@@ -9,6 +9,7 @@ export default function App() {
   const [searchQuery, setSearchQuery] = useState();
   const [userRepos, setUserRepos] = useState();
 
+  // Call the Github API to get user repos
   const getUserRepos = async (username) => {
     if (!username) {
       setFetching(false);
@@ -16,6 +17,7 @@ export default function App() {
       return;
     }
 
+    // Fetch user repos by most recently updated and get 100 of them
     const response = await fetch(
       `https://api.github.com/users/${username}/repos?q=sort=updated&per_page=100`
     )
