@@ -1,8 +1,15 @@
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+## Install dependencies
 
-First, run the development server:
+```bash
+npm i 
+# or
+yarn
+```
+
+## Running the app
 
 ```bash
 npm run dev
@@ -10,25 +17,24 @@ npm run dev
 yarn dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the app.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Testing the app
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+```bash
+npm run test
+# or 
+yarn test
+```
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Enhancement Ideas
+- Styled Components - clean up component usage and get rid of the css module styles that come with Next starter. Ideal for a larger more robust app.  Similar to how I started stucturing things here: https://github.com/shelbycollopy/shelbycollopy.com/tree/main/components
+- Enhance the UI with a theme or some color.
+- Add more details or outbound links to the results - depends on the use case of the app.
+- Type-a-head style search - would need to see if API supports it.
+- Pagination/Lazy load results - depends on the overall use case of the app. If it's just to see the top 10 or so then that woudn't matter. 
+- Keyboard navigation support.
+- Error handling.
+- Hooks work in the case, but a larger app would need a store for state management.
+- Use authentication for accessing the API.
+- Set up API routes in the `api/` folder for the various Github API routes.
