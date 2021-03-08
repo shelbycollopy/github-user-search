@@ -1,65 +1,100 @@
-import Head from 'next/head'
-import styles from '../styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { useState } from "react";
 
-export default function Home() {
+import styles from "../styles/App.module.css";
+
+export default function App() {
+  const [userRepos, setUserRepos] = useState();
+  const [searchQuery, setSearchQuery] = useState();
+  const [errorMessage, setErrorMessage] = useState();
+  const [isFetching, setFetching] = useState(false);
+
+  const getUserRepos = async (username) => {
+    if (!username) {
+      setFetching(false);
+      setErrorMessage("Please enter a user name");
+      return;
+    }
+
+    const response = await fetch(
+      `https://api.github.com/users/${username}/repos?q=sort=updated&per_page=100`
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setFetching(false);
+        return data;
+      });
+
+    if (response && response.length > 0) {
+      return setUserRepos(response);
+    }
+
+    return setErrorMessage("No repos found. Try another username.");
+  };
+
   return (
     <div className={styles.container}>
       <Head>
-        <title>Create Next App</title>
+        <title>Github User Repo Search</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+        <h1>Github User Repo Search</h1>
+        <div className={styles.grid}>
+          <input
+            className={styles.input}
+            onChange={(e) => {
+              setErrorMessage();
+              setSearchQuery(e.target.value);
+            }}
+            placeholder="Enter username"
+            tabIndex="1"
+          />
+          <button
+            className={styles.button}
+            onClick={() => {
+              setUserRepos(null);
+              setFetching(true);
+              getUserRepos(searchQuery);
+            }}
+            tabIndex="2"
+          >
+            Search
+          </button>
+        </div>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
+          {errorMessage && !isFetching && <p>{errorMessage}</p>}
+          {isFetching && !errorMessage && (
+            <Image
+              src="/spinner.svg"
+              height={40}
+              width={40}
+              className={styles.spinner}
+            />
+          )}
 
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          {!isFetching && userRepos && (
+            <ol className={styles.results}>
+              {userRepos
+                .sort((a, b) => b.stargazers_count - a.stargazers_count)
+                .map((repo, i) => {
+                  return (
+                    <li key={i} className={styles.card}>
+                      <h3>{repo.name}</h3>
+                      <div className={styles.stars}>
+                        <span>{repo.stargazers_count}</span>
+                        <Image src="/star.svg" height="20" width="20" />
+                      </div>
+                    </li>
+                  );
+                })}
+            </ol>
+          )}
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
     </div>
-  )
+  );
 }
