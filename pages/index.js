@@ -1,19 +1,18 @@
+import { useState } from "react";
 import Head from "next/head";
 import Image from "next/image";
-import { useState } from "react";
-
 import styles from "../styles/App.module.css";
 
 export default function App() {
-  const [userRepos, setUserRepos] = useState();
-  const [searchQuery, setSearchQuery] = useState();
   const [errorMessage, setErrorMessage] = useState();
   const [isFetching, setFetching] = useState(false);
+  const [searchQuery, setSearchQuery] = useState();
+  const [userRepos, setUserRepos] = useState();
 
   const getUserRepos = async (username) => {
     if (!username) {
       setFetching(false);
-      setErrorMessage("Please enter a user name");
+      setErrorMessage("Please enter a username.");
       return;
     }
 
@@ -26,6 +25,7 @@ export default function App() {
         return data;
       });
 
+    // If the response has a length then we know their are repos
     if (response && response.length > 0) {
       return setUserRepos(response);
     }
