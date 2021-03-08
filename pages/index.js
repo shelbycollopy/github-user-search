@@ -24,6 +24,7 @@ export default function App() {
       .then((res) => res.json())
       .then((data) => {
         setFetching(false);
+        console.log(data);
         return data;
       });
 
@@ -85,9 +86,17 @@ export default function App() {
                 .map((repo, i) => {
                   return (
                     <li key={i} className={styles.card}>
-                      <h3>{repo.name}</h3>
+                      <div className={styles.details}>
+                        <h3>{repo.name}</h3>
+                        <p>{repo.description}</p>
+                        <span>{repo.language}</span>
+                      </div>
                       <div className={styles.stars}>
-                        <span>{repo.stargazers_count}</span>
+                        <span>
+                          {new Intl.NumberFormat().format(
+                            repo.stargazers_count
+                          )}
+                        </span>
                         <Image src="/star.svg" height="20" width="20" />
                       </div>
                     </li>

@@ -49,7 +49,7 @@ describe("App", () => {
         {
           id: 1,
           name: "react",
-          stargazers_count: 100,
+          stargazers_count: 1000,
         },
       ])
     );
@@ -68,7 +68,7 @@ describe("App", () => {
 
     await waitFor(() => {
       expect(getByText("react")).toBeDefined();
-      expect(getByText("100")).toBeDefined();
+      expect(getByText("1,000")).toBeDefined();
     });
   });
 });
